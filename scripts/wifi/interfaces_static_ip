@@ -1,0 +1,7 @@
+allow-hotplug wlan0
+iface wlan0 inet static
+address 192.168.0.150
+netmask 255.255.255.0
+gateway 192.168.0.1
+wpa-ssid "<SSID name>"
+wpa-psk "<password>"

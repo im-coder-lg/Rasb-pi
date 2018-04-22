@@ -48,9 +48,68 @@ ssh pi@169.254.25.25 -p 22
     
 > If you have just turned on the raspberry pi, wait a couple of seconds for it to boot up before trying to connect over ssl.
 
+You can also configure the static ip in the `ect/network/interfaces` config file.
+
+### Set up the wi-fi dongle
+
+For the previous generation of Raspberry pi there was no dongle integrated, and it needed to be bought independently.
+
+To configure it, find some example configuration files in this repo. Once you made a change use `ifconfig` to check your `wlan0` has been updated.
+
+#### Default Method
+
+Find the default configuration for the interface, then:
+
+```
+sudo nano /etc/network/interfaces
+```
+Then add this to the file, don't forget to update your wifi SSID name and password to connect.
+
+```config
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+wpa-ssid "<SSID name>"
+wpa-psk "<password>"
+
+```
+
+Apply the changes with:
+```
+sudo ifdown wlan0
+sudo ifup wlan0
+
+```
+
+#### WPA supplicant Method
+
+This one basically uses another configuration file (both in the wifi folder of this repository).
+
+Update the interface file like before, using the correct interface information.
+Then create the wpa_supplicant.conf file with:
+```
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
+Don't forget to reboot to validate the changes:
+```
+sudo reboot
+```
+or
+```
+shutdown -r now
+```
+
 ### Connecting using VNC
 
 You get to have the gui and the control of the raspberry pi.
+
+## Start Coding
+
+### Processing
+
+The raspberry pi has a built in Processing IDE.
+
+- Get Started with [Processing](https://projects.raspberrypi.org/en/projects/introduction-to-processing/3)
 
 ## Raspberry Pi projects
 
