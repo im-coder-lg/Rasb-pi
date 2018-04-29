@@ -103,6 +103,53 @@ shutdown -r now
 
 You get to have the gui and the control of the raspberry pi.
 
+## General configuration
+
+### Configure the raspberry pi
+
+This is to access the main configuration for the raspberry pi:
+```
+sudo raspi-config
+```
+You can then follow the instructions on the screen to make the update.
+Start the graphical interface if available using:
+```
+sudo startx
+```
+
+### Refresh the OS
+
+To make sure you have all of the latest update on the OS you have just installed use:
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
+You can also make a dependency check using 
+```
+sudo apt-get dist-upgrade
+```
+Or you can also add an auto accept flag to validate all of the required insallation
+```
+sudo apt-get update -y && sudo apt-get upgrade -y
+```
+
+### Set the date
+
+Sometime the date on the raspberry pi can be out of sync if not connected to a time server in your network or on the internet.
+To change the time, you can either use for example:
+```
+sudo date --set="30 December 2013 10:00:00"
+```
+or
+```
+timedatectl set-time [THE DATE]
+```
+
+To change the time zone, you can use:
+```
+sudo dpkg-reconfigure tzdata 
+```
+
 ## Start Coding
 
 ### Processing
