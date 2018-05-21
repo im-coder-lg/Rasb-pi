@@ -28,7 +28,7 @@ You can choose anything between 169.254.0.0 to 169.254.255.255 (it's a range of 
 The default login password is:
 ```
 login: pi
-password: raspberryssh 
+password: raspberry
 
 ```
 > Be wary that if your raspberry pi is open on the internet with a default password, somebody could get access to your home network and mess with it.
@@ -150,6 +150,17 @@ To change the time zone, you can use:
 sudo dpkg-reconfigure tzdata 
 ```
 
+### Configure the Raspberri Pi
+
+Go into the terminal and then
+
+```
+sudo raspi-config
+```
+You can follow the instruction for base cofniguration.
+
+
+
 ## Start Coding
 
 ### Processing
@@ -172,3 +183,69 @@ It was called XBMC first, but has been rename to [kodi](https://kodi.wiki/view/H
 
 - [OSMC](https://osmc.tv/) is a good one.
 
+
+## Install a Apache, PHP, MySQL web server
+
+### Configure Apache
+
+First install apache: (Resolving error AH00558)
+
+```
+sudo apt-get install apache2
+```
+Edit the config of the apache:
+
+```
+sudo nano /etc/apache2/apache2.conf
+```
+to set the server to localhost, print that at the end of the file, localhost is `127.0.0.1`
+
+```
+ServerName localhost
+```
+
+Then give read qccess to apache on the folders where the files that apache will run are (usually in a `/www` folder)
+
+```bash
+sudo chown -R www-data:pi /var/www/html/
+sudo chmod -R 770 /var/www/html/
+```
+
+Verify that it works (ssh):
+
+```bash
+wget -O verif_apache.html http://127.0.0.1
+cat ./verif_apache.html  # if the file exists, then apache has been successfully installed
+```
+
+### Configure PHP
+
+First install php:
+
+```
+sudo apt-get install php v5
+```
+Delete any `index.html` in the `/www` folder, so you can test that php works
+
+```bash
+sudo rm /var/www/html/index.html  # delete index.html
+echo "<?php phpinfo(); ?>" > /var/www/html/index.php  # create index.php
+```
+
+Verify that php works:
+
+```
+wget -O verif_apache.html http://127.0.0.1
+cat ./verif_apache.html  # if you see php version 5.x.x then it works
+```
+
+### Instal MySQL and tools
+
+Here are some tool you will need to install in order to better use your webserver.
+It is mainly to interact between your php and the MySQL database.
+
+```
+sudo apt-get install mysql-server --fix-missing
+sudo apt-get install mysql-client php5-mysql
+sudo apt-get install phpmyadmin
+```
