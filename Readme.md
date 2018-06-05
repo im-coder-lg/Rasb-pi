@@ -29,7 +29,6 @@ The default login password is:
 ```
 login: pi
 password: raspberry
-
 ```
 > Be wary that if your raspberry pi is open on the internet with a default password, somebody could get access to your home network and mess with it.
 
@@ -70,14 +69,12 @@ allow-hotplug wlan0
 iface wlan0 inet dhcp
 wpa-ssid "<SSID name>"
 wpa-psk "<password>"
-
 ```
 
 Apply the changes with:
 ```
 sudo ifdown wlan0
 sudo ifup wlan0
-
 ```
 
 #### WPA supplicant Method
@@ -234,7 +231,7 @@ echo "<?php phpinfo(); ?>" > /var/www/html/index.php  # create index.php
 
 Verify that php works:
 
-```
+```bash
 wget -O verif_apache.html http://127.0.0.1
 cat ./verif_apache.html  # if you see php version 5.x.x then it works
 ```
