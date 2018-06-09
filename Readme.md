@@ -4,6 +4,9 @@ Some information for the raspberry pi:
 
 ![](https://raw.githubusercontent.com/Sylhare/RaspPI/master/resources/raspberry-pi-small.gif)
 
+Here is a bit of the information I like to have quickly when setting up my raspberry PI.
+However if you are look for more accurate information, I would adivse looking at [raspberry's official documentation](https://www.raspberrypi.org/documentation/).
+
 ## Getting Started
 
 ### Install the OS
@@ -14,14 +17,68 @@ To [start](https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-sta
     - Raspbian is a good choice.
 - Get the OS on the micro SD using a tool like [live linux](https://www.linuxliveusb.com/fr/download) or [Win32DiskImager](http://sourceforge.net/projects/win32diskimager/)
     - If you have any problem of memory with the SD card, use [SDformatter](https://www.sdcard.org/downloads/formatter_4/)
-    
-### Set a default IP
 
-In order to easily connect to the raspberry pi over ssl or ethernet, you may want to set it with a default ip.
+### Refresh the OS
 
-For that edit the file called `cmdline.txt` at the root of your SD card and set the ip parameter like `ip=169.254.25.25`.
+To make sure you have all of the latest update on the OS you have just installed use:
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
+You can also make a dependency check using 
+```
+sudo apt-get dist-upgrade
+```
+Or you can also add an auto accept flag to validate all of the required insallation
+```
+sudo apt-get update -y && sudo apt-get upgrade -y
+```
 
-You can choose anything between 169.254.0.0 to 169.254.255.255 (it's a range of [local private ip](https://www.lifewire.com/automatic-private-internet-protocol-addressing-816437)).
+### Set the date
+
+Sometime the date on the raspberry pi can be out of sync if not connected to a time server in your network or on the internet.
+To change the time, you can either use for example:
+```
+sudo date --set="30 December 2013 10:00:00"
+```
+or
+```
+timedatectl set-time [THE DATE]
+```
+
+To change the time zone, you can use:
+```
+sudo dpkg-reconfigure tzdata 
+```
+
+## General configuration
+
+### Configure the raspberry pi
+
+This is to access the main configuration for the raspberry pi:
+```
+sudo raspi-config
+```
+You can then follow the instructions on the screen to make the update.
+
+> Most of the configuration can be done through `raspi-config`, so use it!
+
+Start the graphical interface if available using:
+```
+sudo startx
+```
+
+### Reboot
+
+In order to validate some change, reboot will be necessary.
+
+```
+sudo reboot
+```
+or
+```
+shutdown -r now
+```
 
 ### Connect to the Raspberry Pi
 
@@ -30,9 +87,12 @@ The default login password is:
 login: pi
 password: raspberry
 ```
-> Be wary that if your raspberry pi is open on the internet with a default password, somebody could get access to your home network and mess with it.
 
-You can connect the pi through the HDMI port, or via ssl using an ethernet cable between the rasbperry pi and your pc or directly over wifi in your home network.
+#### SSH
+
+You can connect via SSH using an ethernet cable between the rasbperry pi and your pc or directly over wifi in your home network.
+
+> Don't forget to enable ssh connection using `sudo raspi-config` > `5) Interfacing Options` > `SSH`
 
 The tools you may use:
     
@@ -48,6 +108,15 @@ ssh pi@169.254.25.25 -p 22
 > If you have just turned on the raspberry pi, wait a couple of seconds for it to boot up before trying to connect over ssl.
 
 You can also configure the static ip in the `ect/network/interfaces` config file.
+
+#### Connecting using VNC
+
+You get to have the gui and the control of the raspberry pi. This work a bit like a remote desktop.
+
+> On newer version of raspbian, vnc should already be pre-installed. Don't forget to enable ssh connection using `sudo raspi-config` > `5) Interfacing Options` > `VNC`
+
+
+## Wifi and Internet
 
 ### Set up the wi-fi dongle
 
@@ -87,76 +156,41 @@ Then create the wpa_supplicant.conf file with:
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
-Don't forget to reboot to validate the changes:
+And add your network information:
 ```
-sudo reboot
-```
-or
-```
-shutdown -r now
-```
+network={
+	ssid="<Network SSID>"
+	psk="<Password>"
+    key_mgmt=WPA-PSK
+}
+````
 
-### Connecting using VNC
+Don't forget to reboot to validate the changes.
 
-You get to have the gui and the control of the raspberry pi.
+### Set a default IP
 
-## General configuration
+You can choose anything between the range of [local private ip](https://www.lifewire.com/automatic-private-internet-protocol-addressing-816437).
 
-### Configure the raspberry pi
+#### Using `cmdline.txt`
 
-This is to access the main configuration for the raspberry pi:
-```
-sudo raspi-config
-```
-You can then follow the instructions on the screen to make the update.
-Start the graphical interface if available using:
-```
-sudo startx
-```
+In order to easily connect to the raspberry pi over ethernet, you may want to set it with a default ip (`eth0` interface).
 
-### Refresh the OS
+For that edit the file called `cmdline.txt` at the root of your SD card and set the ip parameter like `ip=169.254.25.25`.
 
-To make sure you have all of the latest update on the OS you have just installed use:
-```
-sudo apt-get update
-sudo apt-get upgrade
-```
-You can also make a dependency check using 
-```
-sudo apt-get dist-upgrade
-```
-Or you can also add an auto accept flag to validate all of the required insallation
-```
-sudo apt-get update -y && sudo apt-get upgrade -y
-```
+#### Configuring `dhcpcd.conf`
 
-### Set the date
-
-Sometime the date on the raspberry pi can be out of sync if not connected to a time server in your network or on the internet.
-To change the time, you can either use for example:
-```
-sudo date --set="30 December 2013 10:00:00"
-```
-or
-```
-timedatectl set-time [THE DATE]
-```
-
-To change the time zone, you can use:
-```
-sudo dpkg-reconfigure tzdata 
-```
-
-### Configure the Raspberri Pi
-
-Go into the terminal and then
+Edit the `dhcpcd.conf` file with the [network configuration](https://www.raspberrypi.org/forums/viewtopic.php?t=191140) you wish to set up.
 
 ```
-sudo raspi-config
+#static IP configuration
+
+interface eth0		  			     # The interface name
+static ip_address=192.168.1.15/24	 # The new static IP
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1
 ```
-You can follow the instruction for base cofniguration.
 
-
+Reboot for the changes to take place.
 
 ## Start Coding
 
