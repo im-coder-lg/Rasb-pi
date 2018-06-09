@@ -40,9 +40,7 @@ Sometime the date on the raspberry pi can be out of sync if not connected to a t
 To change the time, you can either use for example:
 ```
 sudo date --set="30 December 2013 10:00:00"
-```
-or
-```
+# or
 timedatectl set-time [THE DATE]
 ```
 
@@ -74,9 +72,7 @@ In order to validate some change, reboot will be necessary.
 
 ```
 sudo reboot
-```
-or
-```
+# or
 shutdown -r now
 ```
 
@@ -115,6 +111,7 @@ You get to have the gui and the control of the raspberry pi. This work a bit lik
 
 > On newer version of raspbian, vnc should already be pre-installed. Don't forget to enable ssh connection using `sudo raspi-config` > `5) Interfacing Options` > `VNC`
 
+Use [VNC viewer](https://www.realvnc.com/fr/connect/download/viewer/) to connect to your raspberry pi (vnc server) using its IP and username, password.
 
 ## Wifi and Internet
 
@@ -184,7 +181,7 @@ Edit the `dhcpcd.conf` file with the [network configuration](https://www.raspber
 ```
 #static IP configuration
 
-interface eth0		  			     # The interface name
+interface eth0		  	# The interface name
 static ip_address=192.168.1.15/24	 # The new static IP
 static routers=192.168.1.1
 static domain_name_servers=192.168.1.1
