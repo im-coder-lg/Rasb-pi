@@ -84,6 +84,11 @@ login: pi
 password: raspberry
 ```
 
+Also the root password needs to be setted from the pi user using:
+
+```
+sudo passwd root
+```
 #### SSH
 
 You can connect via SSH using an ethernet cable between the rasbperry pi and your pc or directly over wifi in your home network.
@@ -188,6 +193,34 @@ static domain_name_servers=192.168.1.1
 ```
 
 Reboot for the changes to take place.
+
+## More configuration
+
+You can configure a cron job on your raspberry pi for script that you want to execute at a certain rythme:
+
+Example of a cron job and definition:
+
+```bash
+ .---------------- minute (0 - 59) - */2 means every two minutes
+ |  .------------- hour (0 - 23)
+ |  |  .---------- day of month (1 - 31)
+ |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+ |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+ |  |  |  |  |
+ *  *  *  *  *  user /path/to/script.sh
+```
+
+There are two ways to add a cron job. [First](http://withr.me/git-commit-regularly-to-gitlab/) by adding it to the crontab at `/etc/crontab` which is the system cron jobs. 
+
+```bash
+sudo crontab -e
+```
+
+> Don't forget to reboot in order to have the job work
+
+Or the [second way](http://raspberrypituts.com/raspberry-pi-simple-cron-jobs-explanation/) is by creating a cron job in a file placed in ` /etc/cron.d`.
+The syntax is the same and should work right away (if not, reboot).
+
 
 ## Start Coding
 
