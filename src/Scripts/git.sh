@@ -2,5 +2,5 @@
 git pull
 date >> ../../config/date.txt
 git add -A
-git commit -m "Update cron"
+git commit -m "Git update"
 git push -u origin master
