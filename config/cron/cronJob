@@ -1,4 +1,3 @@
-# To be placed into /etc/cron.d
-
 #*/2 * * * * pi /home/pi/CronJobs/RunACronTask.sh
-0 1 * * * pi /home/pi/CronJobs/example.sh
+#0 1 * * * pi /home/pi/CronJobs/autocommit.sh
+0 6 * * * pi bash -c "cd /home/pi/CronJobs/Rasb-pi/ && bash ./src/Scripts/git.sh"
