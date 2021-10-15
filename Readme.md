@@ -5,7 +5,7 @@ Some information for the raspberry pi:
 ![](https://raw.githubusercontent.com/Sylhare/RaspPI/master/resources/raspberry-pi-small.gif)
 
 Here is a bit of the information I like to have quickly when setting up my raspberry PI.
-However if you are look for more accurate information, I would adivse looking at [raspberry's official documentation](https://www.raspberrypi.org/documentation/).
+However if you are look for more accurate information, I would advise looking at [Raspberry Pi's official documentation](https://www.raspberrypi.org/documentation/).
 
 ## Getting Started
 
@@ -13,9 +13,9 @@ However if you are look for more accurate information, I would adivse looking at
 
 To [start](https://projects.raspberrypi.org/en/projects/raspberry-pi-getting-started) with a Raspberry Pi, you first need to install an image of an OS in a micro SD card.
 
-- Get the OS on the [raspberry website](http://www.raspberrypi.org/downloads/)
-    - Raspbian is a good choice.
-- Get the OS on the micro SD using a tool like [live linux](https://www.linuxliveusb.com/fr/download) or [Win32DiskImager](http://sourceforge.net/projects/win32diskimager/)
+- Get the OS on the [Raspberry Pi website](http://www.raspberrypi.org/downloads/)
+    - Raspberry Pi OS(formerly called Raspbian) is a good choice.
+- Get the OS on the micro SD using a tool like [live linux](https://www.linuxliveusb.com/fr/download) or [Win32DiskImager](http://sourceforge.net/projects/win32diskimager/). Best to use the [Raspberry Pi Imager](https://www.raspberrypi.com/software/) 
     - If you have any problem of memory with the SD card, use [SDformatter](https://www.sdcard.org/downloads/formatter_4/)
 
 ### Refresh the OS
